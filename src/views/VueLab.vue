@@ -1,10 +1,11 @@
 <template>
 
   <el-container class="layout-container-demo" style="height: 500px">
-    <el-header style="text-align: right; font-size: 12px">
+    <el-header style=" font-size: 24px; text-align: right">
       <div class="toolbar">
-        <el-dropdown>
-          <el-icon style="margin-right: 8px; margin-top: 1px">
+        <el-icon id="home" @click="goHome"><House/></el-icon>
+        <el-dropdown style="text-align: right">
+          <el-icon style="margin-right: 8px; margin-top: 1px; font-size: 24px">
             <Setting/>
           </el-icon>
           <template #dropdown>
@@ -26,16 +27,11 @@
           <el-menu :default-openeds="['1', '3']">
             <el-sub-menu index="1">
               <template #title>
-                <el-icon><message /></el-icon>Navigator One
+                <el-icon><message /></el-icon>基础知识
               </template>
-              <el-menu-item-group>
-                <template #title>Group 1</template>
                 <el-menu-item index="1-1">Option 1</el-menu-item>
                 <el-menu-item index="1-2">Option 2</el-menu-item>
-              </el-menu-item-group>
-              <el-menu-item-group title="Group 2">
                 <el-menu-item index="1-3">Option 3</el-menu-item>
-              </el-menu-item-group>
               <el-sub-menu index="1-4">
                 <template #title>Option4</template>
                 <el-menu-item index="1-4-1">Option 4-1</el-menu-item>
@@ -43,16 +39,11 @@
             </el-sub-menu>
             <el-sub-menu index="2">
               <template #title>
-                <el-icon><icon-menu /></el-icon>Navigator Two
+                <el-icon><Aim /></el-icon>炫酷案例
               </template>
-              <el-menu-item-group>
-                <template #title>Group 1</template>
                 <el-menu-item index="2-1">Option 1</el-menu-item>
                 <el-menu-item index="2-2">Option 2</el-menu-item>
-              </el-menu-item-group>
-              <el-menu-item-group title="Group 2">
                 <el-menu-item index="2-3">Option 3</el-menu-item>
-              </el-menu-item-group>
               <el-sub-menu index="2-4">
                 <template #title>Option 4</template>
                 <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
@@ -60,16 +51,11 @@
             </el-sub-menu>
             <el-sub-menu index="3">
               <template #title>
-                <el-icon><setting /></el-icon>Navigator Three
+                <el-icon><setting /></el-icon>遗留问题
               </template>
-              <el-menu-item-group>
-                <template #title>Group 1</template>
                 <el-menu-item index="3-1">Option 1</el-menu-item>
                 <el-menu-item index="3-2">Option 2</el-menu-item>
-              </el-menu-item-group>
-              <el-menu-item-group title="Group 2">
                 <el-menu-item index="3-3">Option 3</el-menu-item>
-              </el-menu-item-group>
               <el-sub-menu index="3-4">
                 <template #title>Option 4</template>
                 <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
@@ -110,8 +96,20 @@
         <!--单双向绑定-->
         <div>
           <h1>单双向绑定</h1>
+          <!--单向绑定中v-bind可省略-->
           单向数据绑定：<br/><br/><el-input type="text" :value="bind.name"></el-input><br/><br/>
           双向数据绑定：<br/><br/><el-input type="text" v-model="bind.name"></el-input>
+        </div>
+        <hr/>
+        <!--事件-->
+        <div>
+          <h1>事件</h1>
+          <el-button v-on:click="showInfo1">我来也！(不传参弹窗)</el-button><br/><br/>
+          <div>
+            <el-input v-model="input" placeholder="请输入姓名" style="width: 100px; margin-right: 20px"></el-input>
+            <el-button @click="showInfo2($event,input)">我来也！(传参弹窗)</el-button>
+          </div>
+
         </div>
         <hr/>
 
@@ -138,10 +136,22 @@ export default {
       show: true,
       list: [1, 2, 3],
       bind : {
-        name : "单项绑定也可写为v-bind:value=\"name\""
-      }
+        name : "单项绑定也可写为v-bind:value=\"name\"(v-bind可省略)"
+      },
+      input : ""
     };
   },
+  methods:{
+    showInfo1(){
+      alert("泥豪\\(@^0^@)/")
+    },
+    showInfo2(event,name){
+      alert(name+"泥豪\\(@^0^@)/")
+    },
+    goHome(){
+      this.$router.push('/welcome')
+    }
+  }
 }
 
 </script>
@@ -160,6 +170,7 @@ export default {
   color: var(--el-text-color-primary);
   background: var(--el-color-primary-light-8);
   height: calc(100vh - 70px);
+  width: 250px;
 }
 .layout-container-demo .el-menu {
   border-right: none;
@@ -174,5 +185,10 @@ export default {
   justify-content: center;
   height: 100%;
   right: 20px;
+}
+#home{
+  position: absolute;
+  left: 30px;
+  cursor: pointer;
 }
 </style>
