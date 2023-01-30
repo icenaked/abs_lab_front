@@ -5,7 +5,7 @@
       <div class="toolbar">
         <el-icon id="home" @click="goHome"><House/></el-icon>
         <el-dropdown style="text-align: right">
-          <el-icon style="margin-right: 8px; margin-top: 1px; font-size: 24px">
+          <el-icon style="margin-right: 8px; margin-top: 1px; font-size: 24px;cursor:pointer">
             <Setting/>
           </el-icon>
           <template #dropdown>
@@ -27,7 +27,7 @@
           <el-menu :default-openeds="['1', '3']">
             <el-sub-menu index="1">
               <template #title>
-                <el-icon><message /></el-icon>基础知识
+                <el-icon><aim /></el-icon>基础知识
               </template>
                 <el-menu-item index="1-1">Option 1</el-menu-item>
                 <el-menu-item index="1-2">Option 2</el-menu-item>
@@ -39,7 +39,7 @@
             </el-sub-menu>
             <el-sub-menu index="2">
               <template #title>
-                <el-icon><Aim /></el-icon>炫酷案例
+                <el-icon><star /></el-icon>炫酷案例
               </template>
                 <el-menu-item index="2-1">Option 1</el-menu-item>
                 <el-menu-item index="2-2">Option 2</el-menu-item>
@@ -50,8 +50,8 @@
               </el-sub-menu>
             </el-sub-menu>
             <el-sub-menu index="3">
-              <template #title>
-                <el-icon><setting /></el-icon>遗留问题
+              <template #title >
+                <el-icon @click="gotoDraft"><editPen /></el-icon>草稿纸
               </template>
                 <el-menu-item index="3-1">Option 1</el-menu-item>
                 <el-menu-item index="3-2">Option 2</el-menu-item>
@@ -68,17 +68,51 @@
       <el-main class="leftAlign">
         <el-scrollbar>
         <!-- -->
-        <!--list示例-->
+<!--list示例-->
         <div>
           <h1>list示例</h1>
-          <el-form id="list">
+          <div>遍历数组</div>
+          <ul>
             <li v-for="p in persons" :key="p.id" >
               {{p.id}}-{{p.name}}--{{p.age}}
             </li>
-          </el-form>
+          </ul>
+          <ul>
+            <li v-for="(p,index) in persons" :key="index" >
+              {{p.id}}-{{p.name}}--{{p.age}}
+            </li>
+          </ul>
+          <div>遍历对象</div>
+          <ul>
+            <li v-for="(value,k) in car" :key="k" >
+              {{k}} : {{value}}
+            </li>
+          </ul>
+          <div>遍历字符串</div>
+          <ul>
+            <li v-for="(char,k) in str" :key="k" >
+              {{k}} : {{char}}
+            </li>
+          </ul>
+          <div>遍历指定次数</div>
+          <ul>
+            <li v-for="(number,k) in 5" :key="k" >
+              {{k}} : {{number}}
+            </li>
+          </ul>
+          <div>列表过滤/排序</div><br/>
+          <el-input placeholder="输入姓名搜索" v-model="keyWord" style="width: 200px; margin-right: 20px"></el-input>
+          <el-button @click="sortType = 2">年龄升序</el-button>
+          <el-button @click="sortType = 1">年龄降序</el-button>
+          <el-button @click="sortType = 0">恢复原序</el-button>
+          <ul>
+            <li v-for="p in filFamous" :key="p.id" >
+              {{p.id}}-{{p.name}}--{{p.age}}
+            </li>
+          </ul>
         </div>
         <hr/>
-        <!--list操作-->
+<!--list操作-->
         <div>
           <h1 class="leftAlign">list操作</h1>
           <el-button @click="show = !show">隐藏</el-button>
@@ -93,7 +127,7 @@
           <p v-else>List is empty.</p>
         </div>
         <hr/>
-        <!--单双向绑定-->
+<!--单双向绑定-->
         <div>
           <h1>单双向绑定</h1>
           <!--单向绑定中v-bind可省略-->
@@ -101,7 +135,7 @@
           双向数据绑定：<br/><br/><el-input type="text" v-model="bind.name"></el-input>
         </div>
         <hr/>
-        <!--事件-->
+<!--事件-->
         <div>
           <h1>事件</h1>
           <el-button v-on:click="showInfo1">我来也！(不传参弹窗)</el-button><br/><br/>
@@ -109,9 +143,55 @@
             <el-input v-model="input" placeholder="请输入姓名" style="width: 100px; margin-right: 20px"></el-input>
             <el-button @click="showInfo2($event,input)">我来也！(传参弹窗)</el-button>
           </div>
-
         </div>
         <hr/>
+<!--计算属性-->
+        <h1>计算属性</h1>
+        <div>
+          姓： <el-input v-model="firstName" placeholder="请输入姓" style="width: 100px; margin-right: 20px"></el-input><br/><br/>
+          名： <el-input v-model="lastName" placeholder="请输入名" style="width: 100px; margin-right: 20px"></el-input><br/><br/>
+          计算属性猜你的全名是：<span>{{fullName}}</span><br/><br/>
+          计算属性（简写）猜你的全名是：<span>{{fullNam}}</span>
+        </div>
+        <hr/>
+<!--lab1-->
+        <h1>lab1</h1>
+        <ElCard class="project-card" shadow="hover">
+          <template #header>
+            <span>{{projCard.name}}</span>
+          </template>
+          <div>描述：{{projCard.description}}</div>
+          <ElTooltip class="item" effect="dark" :content="gitRemoteUrl" placement="top">
+            <div class="link">链接：<a class="url" @click.stop.prevent="copy(gitRemoteUrl)">{{gitRemoteUrl}}</a></div>
+          </ElTooltip>
+        </ElCard>
+        <hr/>
+<!--绑定class样式-->
+        <h1>绑定class样式</h1>
+        <div>
+          <div class="basic" :class="mood" @click="changeMood">点我随机变色</div>
+        </div>
+        <hr/>
+<!--条件渲染-->
+        <div>
+          <h1>条件渲染</h1>
+          当前的n为：{{n}}
+          <el-button @click="n++">不知名按钮</el-button><br/><br/>
+          <!--template配合v-if使用，不能和v-show一起用，实际效果为去掉这一层结构包装，所以新vue文件template里必须再写一个div才能用-->
+          <template v-if="n === 1">
+            不错。
+          </template>
+          <template v-else-if="n === 2">
+            不对劲..
+          </template>
+          <template v-else-if="n === 3">
+            救命！！
+          </template>
+          <template v-else>
+            ...(无人回应)
+          </template>
+        </div>
+        <hr>
 
         </el-scrollbar>
       </el-main>
@@ -130,17 +210,76 @@ export default {
       activeIndex: "1",
       persons : [
         {id:'001',name:"张三",age:18},
-        {id:'001',name:"李四",age:19},
-        {id:'001',name:"王五",age:28}
+        {id:'002',name:"李四",age:19},
+        {id:'003',name:"王五",age:28}
       ],
+      famous : [
+        {id:'001',name:"马冬梅",age:18,sex:'女'},
+        {id:'002',name:"周冬雨",age:30,sex:'女'},
+        {id:'003',name:"周杰伦",age:40,sex:'男'},
+        {id:'004',name:"温兆伦",age:21,sex:'男'},
+      ],
+      sortType: 0,
+      keyWord:"",
+      car: {
+        name : 'bmw',
+        price : '1000w',
+        color : 'black'
+      },
+      str : "zhangyueqi",
       show: true,
       list: [1, 2, 3],
       bind : {
         name : "单项绑定也可写为v-bind:value=\"name\"(v-bind可省略)"
       },
-      input : ""
+      input : "",
+      firstName:"",
+      lastName:"",
+      projCard:{
+        name: "66",
+        description:"xx",
+      },
+      mood:"normal",
+      n:0,
     };
   },
+  computed:{
+    fullName:{
+      get(){
+        return this.firstName+'-'+this.lastName
+      },
+      set(value){
+        const arr=value.split('-')
+        this.firstName=arr[0]
+        this.lastName=arr[1]
+      }
+    },
+    //只考虑读取，不考虑修改的时候可以用计算属性的简写
+//     fullNam(){
+//       return this.firstName+this.lastName
+//     },
+    filFamous(){
+      const arr= this.famous.filter((p)=>{
+        return p.name.indexOf(this.keyWord) !== -1
+      })
+      if(this.sortType){
+        arr.sort((p1,p2)=>{
+          return this.sortType ===1 ? p2.age-p1.age : p1.age-p2.age
+        })
+      }
+      return arr
+    }
+  },
+  // watch:{
+  //   keyWord:{
+  //     immediate: true,
+  //     handler(val){
+  //       this.filFamous = this.famous.filter((p)=>{
+  //         return p.name.indexOf(val) !== -1
+  //       })
+  //     }
+  //   }
+  // },
   methods:{
     showInfo1(){
       alert("泥豪\\(@^0^@)/")
@@ -150,6 +289,14 @@ export default {
     },
     goHome(){
       this.$router.push('/welcome')
+    },
+    gotoDraft(){
+      this.$router.push('/draft')
+    },
+    changeMood(){
+      const arr=['happy','sad','normal']
+      const index=Math.floor(Math.random()*3)
+      this.mood = arr[index]
     }
   }
 }
@@ -159,6 +306,11 @@ export default {
 <style scoped>
 .leftAlign{
   text-align: left
+}
+.project-card {
+  width: calc(25% - 24px);
+  margin: 12px;
+  cursor: pointer;
 }
 .layout-container-demo .el-header {
   position: relative;
@@ -190,5 +342,20 @@ export default {
   position: absolute;
   left: 30px;
   cursor: pointer;
+}
+.basic{
+  width:400px;
+  height:100px;
+  border:1px solid black;
+  cursor: pointer;
+}
+.normal{
+  background: white;
+}
+.happy{
+  background: red;
+}
+.sad{
+  background: blue;
 }
 </style>

@@ -32,6 +32,11 @@ const routes = [
         name: "VueLab",
         component: () => import("../views/VueLab"),
 
+    },
+    {
+        path: "/draft",
+        name: "draft",
+        component: () => import("../views/draft"),
     }
 
 ];
