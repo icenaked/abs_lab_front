@@ -192,6 +192,43 @@
           </template>
         </div>
         <hr>
+<!--收集表单数据-->
+        <div>
+          <h1>收集表单数据</h1>
+          <el-form @submit.prevent="demo">
+            <!--trim去空格，number保证年龄为数字-->
+            账号:<el-input class="smallInput" type="text" v-model.trim="userInfo.account"></el-input><br/><br/>
+            密码:<el-input class="smallInput" type="password" v-model="userInfo.password"></el-input><br/><br/>
+            年龄:<el-input class="smallInput" type="number" v-model.number="userInfo.age"></el-input><br/><br/>
+            性别：
+            <el-radio-group v-model="userInfo.sex">
+              <el-radio label="male">男</el-radio>
+              <el-radio label="female">女</el-radio>
+            </el-radio-group>
+            <br/><br/>
+            爱好：
+            <el-checkbox v-model="userInfo.hobby" label="cs"></el-checkbox>
+            <el-checkbox v-model="userInfo.hobby" label="lol"></el-checkbox>
+            <el-checkbox v-model="userInfo.hobby" label="mhwi"></el-checkbox>
+            <br/><br/>
+            所属校区
+            <select v-model="userInfo.city">
+              <option value="">请选择</option>
+              <option value="beijing">北京</option>
+              <option value="shanghai">上海</option>
+              <option value="shenzhen">深圳</option>
+              <option value="wuhan">武汉</option>
+            </select>
+            <br/><br/>
+            其他信息：
+            <!--lazy不实时收集，适用于个人简介这种要写很长时间的文字-->
+            <textarea v-model.lazy="userInfo.other"></textarea><br/><br/>
+            <el-checkbox v-model="userInfo.agree">阅读并接受</el-checkbox>
+            <a href="www.baidu.com">《用户协议》</a>
+            <el-button native-type="submit" style="margin-left: 20px">提交</el-button>
+          </el-form>
+        </div>
+        <hr/>
 
         </el-scrollbar>
       </el-main>
@@ -241,6 +278,17 @@ export default {
       },
       mood:"normal",
       n:0,
+      userInfo:{
+        account:"",
+        password:"",
+        age:"",
+        sex:"",
+        hobby:[],
+        city:"beijing",
+        other:"",
+        agree:"",
+      },
+
     };
   },
   computed:{
@@ -297,6 +345,10 @@ export default {
       const arr=['happy','sad','normal']
       const index=Math.floor(Math.random()*3)
       this.mood = arr[index]
+    },
+    demo(){
+      alert("nb!")
+      console.log(JSON.stringify((this.userInfo)))
     }
   }
 }
@@ -357,5 +409,8 @@ export default {
 }
 .sad{
   background: blue;
+}
+.smallInput{
+  width:200px;
 }
 </style>
