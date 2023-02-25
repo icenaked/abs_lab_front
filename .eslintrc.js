@@ -1,7 +1,9 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
+    "jquery":true,
+    "amd":true
   },
   'extends': [
     'plugin:vue/essential',
@@ -17,6 +19,9 @@ module.exports = {
     //关闭组件命名规则
     "vue/multi-word-component-names":"off",
   },
+  "globals":{
+    "globalThis": true
+  },
   overrides: [
     {
       files: [
@@ -24,7 +29,7 @@ module.exports = {
         '**/tests/unit/**/*.spec.{j,t}s?(x)'
       ],
       env: {
-        jest: true
+        jest: true,
       }
     }
   ]

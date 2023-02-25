@@ -68,7 +68,7 @@
       <el-main class="leftAlign">
         <el-scrollbar>
         <!-- -->
-<!--list示例-->
+        <!--list示例-->
         <div>
           <h1>list示例</h1>
           <div>遍历数组</div>
@@ -112,7 +112,7 @@
           </ul>
         </div>
         <hr/>
-<!--list操作-->
+        <!--list操作-->
         <div>
           <h1 class="leftAlign">list操作</h1>
           <el-button @click="show = !show">隐藏</el-button>
@@ -127,7 +127,7 @@
           <p v-else>List is empty.</p>
         </div>
         <hr/>
-<!--单双向绑定-->
+        <!--单双向绑定-->
         <div>
           <h1>单双向绑定</h1>
           <!--单向绑定中v-bind可省略-->
@@ -135,7 +135,7 @@
           双向数据绑定：<br/><br/><el-input type="text" v-model="bind.name"></el-input>
         </div>
         <hr/>
-<!--事件-->
+        <!--事件-->
         <div>
           <h1>事件</h1>
           <el-button v-on:click="showInfo1">我来也！(不传参弹窗)</el-button><br/><br/>
@@ -145,7 +145,7 @@
           </div>
         </div>
         <hr/>
-<!--计算属性-->
+        <!--计算属性-->
         <h1>计算属性</h1>
         <div>
           姓： <el-input v-model="firstName" placeholder="请输入姓" style="width: 100px; margin-right: 20px"></el-input><br/><br/>
@@ -154,7 +154,7 @@
           计算属性（简写）猜你的全名是：<span>{{fullNam}}</span>
         </div>
         <hr/>
-<!--lab1-->
+        <!--lab1-->
         <h1>lab1</h1>
         <ElCard class="project-card" shadow="hover">
           <template #header>
@@ -166,13 +166,13 @@
           </ElTooltip>
         </ElCard>
         <hr/>
-<!--绑定class样式-->
+        <!--绑定class样式-->
         <h1>绑定class样式</h1>
         <div>
           <div class="basic" :class="mood" @click="changeMood">点我随机变色</div>
         </div>
         <hr/>
-<!--条件渲染-->
+        <!--条件渲染-->
         <div>
           <h1>条件渲染</h1>
           当前的n为：{{n}}
@@ -192,7 +192,7 @@
           </template>
         </div>
         <hr>
-<!--收集表单数据-->
+        <!--收集表单数据-->
         <div>
           <h1>收集表单数据</h1>
           <el-form @submit.prevent="demo">
@@ -224,9 +224,35 @@
             <!--lazy不实时收集，适用于个人简介这种要写很长时间的文字-->
             <textarea v-model.lazy="userInfo.other"></textarea><br/><br/>
             <el-checkbox v-model="userInfo.agree">阅读并接受</el-checkbox>
-            <a href="www.baidu.com">《用户协议》</a>
+            <a href="https://www.baidu.com">《用户协议》</a>
             <el-button native-type="submit" style="margin-left: 20px">提交</el-button>
           </el-form>
+        </div>
+        <hr/>
+        <!--过滤器-->
+        <div>
+          <h1>过滤器</h1>
+          现在是{{fmtTime}}(计算属性)
+          <br/>
+          现在是{{time}}(过滤器vue3中已废除)
+        </div>
+        <hr/>
+        <!--自定义v-zyq-->
+        <div>
+          <h1>自定义v-zyq</h1>
+          <span v-zyq="822"></span>
+        </div>
+        <hr/>
+        <!--生命周期-->
+        <div>
+          <h1>生命周期</h1>
+                      <!--此处可简写{opacity}-->
+          <h2 :style="{opacity: opacity}">welcome!!</h2>
+        </div>
+        <hr/>
+        <!--模板-->
+        <div>
+          <h1>标题</h1>
         </div>
         <hr/>
 
@@ -240,6 +266,7 @@
 </template>
 
 <script>
+import dayjs from "@/utils/dayjs.min"
 export default {
   name: "VueLab",
   data() {
@@ -288,7 +315,8 @@ export default {
         other:"",
         agree:"",
       },
-
+      time: 1621561377603,
+      opacity: 0.5,
     };
   },
   computed:{
@@ -302,10 +330,10 @@ export default {
         this.lastName=arr[1]
       }
     },
-    //只考虑读取，不考虑修改的时候可以用计算属性的简写
-//     fullNam(){
-//       return this.firstName+this.lastName
-//     },
+    // 只考虑读取，不考虑修改的时候可以用计算属性的简写
+    fullNam(){
+      return this.firstName+this.lastName
+    },
     filFamous(){
       const arr= this.famous.filter((p)=>{
         return p.name.indexOf(this.keyWord) !== -1
@@ -316,6 +344,9 @@ export default {
         })
       }
       return arr
+    },
+    fmtTime(){
+      return dayjs(this.time).format('YYYY-MM-DD hh:mm:ss')
     }
   },
   // watch:{
@@ -328,6 +359,11 @@ export default {
   //     }
   //   }
   // },
+  directives:{
+    zyq(element,binding){
+      element.innerText=binding.value+20010000
+    }
+  },
   methods:{
     showInfo1(){
       alert("泥豪\\(@^0^@)/")
@@ -349,9 +385,16 @@ export default {
     demo(){
       alert("nb!")
       console.log(JSON.stringify((this.userInfo)))
+    },
+  },
+  mounted(){
+      setInterval(()=>{
+        this.opacity-=0.01
+        if(this.opacity<=0) this.opacity=1
+      },16)
     }
-  }
 }
+
 
 </script>
 
@@ -360,7 +403,7 @@ export default {
   text-align: left
 }
 .project-card {
-  width: calc(25% - 24px);
+  width: calc(33% - 24px);
   margin: 12px;
   cursor: pointer;
 }
