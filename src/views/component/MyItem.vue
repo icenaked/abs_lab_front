@@ -1,16 +1,25 @@
 <template>
   <li>
     <label>
-      <input type="checkbox"/>
-      <span>xxx</span>
+      <input type="checkbox" :checked="todo.done" @change="handleCheck(todo.id)"/>
+      <span>{{ todo.title }}</span>
     </label>
-    <button class="btn btn-danger" style="display:none">delete</button>
+    <button class="btn btn-danger" @click="handleDelete(todo.id)">delete</button>
   </li>
 </template>
 
 <script>
 export default {
-  name: "MyItem"
+  name: "MyItem",
+  props:["todo","checkTodo","deleteTodo"],
+  methods:{
+    handleCheck(id){
+      this.checkTodo(id)
+    },
+    handleDelete(id){
+        this.deleteTodo(id)
+    }
+  }
 }
 </script>
 
@@ -42,5 +51,11 @@ li:before{
 }
 li:last-child{
   border-bottom: none;
+}
+li:hover{
+  background-color: #ddd;
+}
+li:hover button{
+  display: block;
 }
 </style>

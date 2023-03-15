@@ -255,9 +255,9 @@
           <h1>todoList</h1>
           <div class="todo-container">
             <div class="todo-wrap">
-              <MyHeader/>
-              <MyList/>
-              <MyFooter/>
+              <MyHeader :addTodo="addTodo"/>
+              <MyList :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo"/>
+              <MyFooter :todos="todos" :checkAllTodo="checkAllTodo" :clearAllTodo="clearAllTodo"/>
             </div>
           </div>
         </div>
@@ -333,6 +333,11 @@ export default {
       },
       time: 1621561377603,
       opacity: 0.5,
+      todos:[
+        {id:'001',title:'吃饭',done:true},
+        {id:'002',title:'睡觉',done:false},
+        {id:'003',title:'训练',done:true}
+      ],
     };
   },
   computed:{
@@ -402,6 +407,25 @@ export default {
       alert("nb!")
       console.log(JSON.stringify((this.userInfo)))
     },
+    addTodo(todoObj){
+      this.todos.unshift(todoObj)
+    },
+    checkTodo(id){
+      this.todos.forEach((todo)=>{
+        if(todo.id===id) todo.done = !todo.done
+      })
+    },
+    deleteTodo(id){
+      this.todos= this.todos.filter( todo => todo.id !==id)
+    },
+    checkAllTodo(done){
+      this.todos.forEach(todo=>{
+        todo.done=done
+      })
+    },
+    clearAllTodo(){
+      this.todos = this.todos.filter(todo => !todo.done)
+    }
   },
   mounted(){
       setInterval(()=>{

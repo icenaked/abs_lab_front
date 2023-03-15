@@ -1,18 +1,49 @@
 <template>
-<div class="todo-footer">
+<div class="todo-footer" v-show="total">
   <label>
-    <input type="checkbox"/>
+    <input type="checkbox" :checked="isAll" @change="checkAll"/>
   </label>
   <span>
-    <span>completed 0</span> (all 2)
+    <span>completed {{totalDone}}</span> (all {{total}})
   </span>
-  <button class="btn btn-danger">clear all completed task</button>
+  <button class="btn btn-danger" @click="clearAll">clear all completed task</button>
 </div>
 </template>
 
 <script>
 export default {
-name: "MyFooter"
+  name: "MyFooter",
+  props:["todos","checkAllTodo","clearAllTodo"],
+  computed:{
+    total(){
+      return this.todos.length
+    },
+
+    totalDone(){
+      let i=0
+      this.todos.forEach((todo)=>{
+        if(todo.done) i++
+      })
+      return i
+      //高端写法👇
+      // return this.todos.reduce((pre,oneTodo)=> pre + (oneTodo.done ? 1: 0),0)
+    },
+
+    isAll(){
+      return this.total===this.totalDone && this.total>0
+    },
+
+  },
+  methods:{
+    checkAll(e){
+      this.checkAllTodo(e.target.checked)
+    },
+    clearAll(){
+      if(confirm('confirm clear all completed tasks?')){
+        this.clearAllTodo()
+      }
+    }
+  }
 }
 </script>
 
