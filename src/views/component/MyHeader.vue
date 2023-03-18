@@ -13,12 +13,11 @@ export default {
       title:"",
     }
   },
-  props:["addTodo"],
   methods:{
     add(){
       if(!this.title.trim()) return alert("不能为空！")
       const todoObj={id: nanoid(), title: this.title, done: false}
-      this.addTodo(todoObj)
+      this.$emit('addTodo', todoObj)
       this.title=""
     }
   }

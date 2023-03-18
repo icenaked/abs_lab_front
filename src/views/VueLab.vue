@@ -255,9 +255,9 @@
           <h1>todoList</h1>
           <div class="todo-container">
             <div class="todo-wrap">
-              <MyHeader :addTodo="addTodo"/>
-              <MyList :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo"/>
-              <MyFooter :todos="todos" :checkAllTodo="checkAllTodo" :clearAllTodo="clearAllTodo"/>
+              <MyHeader @addTodo="addTodo"/>
+              <MyList :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo" :updateTodo="updateTodo"/>
+              <MyFooter :todos="todos" @checkAllTodo="checkAllTodo" @clearAllTodo="clearAllTodo"/>
             </div>
           </div>
         </div>
@@ -278,6 +278,7 @@
 </template>
 
 <script>
+//import pubsub from 'pubsub-js'
 import dayjs from "@/utils/dayjs.min"
 import MyFooter from "@/views/component/MyFooter";
 import MyHeader from "@/views/component/MyHeader";
@@ -333,11 +334,12 @@ export default {
       },
       time: 1621561377603,
       opacity: 0.5,
-      todos:[
-        {id:'001',title:'吃饭',done:true},
-        {id:'002',title:'睡觉',done:false},
-        {id:'003',title:'训练',done:true}
-      ],
+      // todos:[
+      //   {id:'001',title:'吃饭',done:true},
+      //   {id:'002',title:'睡觉',done:false},
+      //   {id:'003',title:'训练',done:true}
+      // ],
+      todos: JSON.parse(localStorage.getItem("todos")) || []
     };
   },
   computed:{
@@ -370,16 +372,22 @@ export default {
       return dayjs(this.time).format('YYYY-MM-DD hh:mm:ss')
     }
   },
-  // watch:{
-  //   keyWord:{
-  //     immediate: true,
-  //     handler(val){
-  //       this.filFamous = this.famous.filter((p)=>{
-  //         return p.name.indexOf(val) !== -1
-  //       })
-  //     }
-  //   }
-  // },
+  watch:{
+    // keyWord:{
+    //   immediate: true,
+    //   handler(val){
+    //     this.filFamous = this.famous.filter((p)=>{
+    //       return p.name.indexOf(val) !== -1
+    //     })
+    //   }
+    // },
+    todos:{
+      deep:true,
+      handler(value){
+        localStorage.setItem("todos", JSON.stringify(value))
+      }
+    }
+  },
   directives:{
     zyq(element,binding){
       element.innerText=binding.value+20010000
@@ -425,6 +433,11 @@ export default {
     },
     clearAllTodo(){
       this.todos = this.todos.filter(todo => !todo.done)
+    },
+    updateTodo(id,newTitle){
+      this.todos.forEach(todo=>{
+        if(todo.id===id) todo.title=newTitle
+      })
     }
   },
   mounted(){
@@ -517,9 +530,19 @@ export default {
   background-color: #da4f49;
   border: 1px solid #bd362f;
 }
+.btn-edit{
+  color: #fff;
+  background-color: skyblue;
+  border: 1px solid #6ba5bd;
+  margin-right: 5px;
+}
 .btn-danger:hover{
   color: #fff;
   background-color: #bd362f;
+}
+.btn-edit:hover{
+  color: #fff;
+  background-color: #6ba5bd;
 }
 .btn:focus{
   outline: none;

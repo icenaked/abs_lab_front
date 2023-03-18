@@ -2,22 +2,41 @@
   <li>
     <label>
       <input type="checkbox" :checked="todo.done" @change="handleCheck(todo.id)"/>
-      <span>{{ todo.title }}</span>
+      <span v-show="!todo.isEdit">{{ todo.title }}</span>
+      <input v-show="todo.isEdit"
+             type="text"
+             :value="todo.title"
+             @blur="handleBlur(todo,$event)"
+             ref="inputTitle"
+      >
     </label>
     <button class="btn btn-danger" @click="handleDelete(todo.id)">delete</button>
+    <button class="btn btn-edit" v-show="!todo.isEdit" @click="handleEdit(todo)">edit</button>
   </li>
 </template>
 
 <script>
 export default {
   name: "MyItem",
-  props:["todo","checkTodo","deleteTodo"],
+  props:["todo","checkTodo","deleteTodo","updateTodo"],
   methods:{
     handleCheck(id){
       this.checkTodo(id)
     },
     handleDelete(id){
-        this.deleteTodo(id)
+      this.deleteTodo(id)
+    },
+    handleEdit(todo){
+      todo.isEdit = true
+      this.$nextTick(function (){
+        this.$refs.inputTitle.focus()
+      })
+    },
+    //失去焦点
+    handleBlur(todo,e){
+      todo.isEdit = false
+      if(!e.target.value.trim()) return alert('输入不能为空')
+      this.updateTodo(todo.id,e.target.value)
     }
   }
 }
