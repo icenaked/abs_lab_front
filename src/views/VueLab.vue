@@ -262,6 +262,24 @@
           </div>
         </div>
         <hr/>
+        <!--过度与动画-->
+        <div>
+          <h1>过度与动画</h1>
+          <button @click="isShow=!isShow">显示/隐藏</button>
+          <transition name="hello" :appear="true">
+            <h2 v-show="isShow" style="background-color: blueviolet">普通动画</h2>
+          </transition>
+          <transition-group
+              name="animate__animated animate__bounce"
+              appear
+              enter-active-class="animate__swing"
+              leave-active-class="animate__backOutUp"
+          >
+            <h2 v-show="isShow" key="1" style="background-color: orange">第三方动画</h2>
+            <h2 v-show="!isShow" key="2" style="background-color: orange">animate.css</h2>
+          </transition-group>
+        </div>
+        <hr/>
         <!--模板-->
         <div>
           <h1>标题</h1>
@@ -279,6 +297,7 @@
 
 <script>
 //import pubsub from 'pubsub-js'
+import 'animate.css'
 import dayjs from "@/utils/dayjs.min"
 import MyFooter from "@/views/component/MyFooter";
 import MyHeader from "@/views/component/MyHeader";
@@ -339,7 +358,8 @@ export default {
       //   {id:'002',title:'睡觉',done:false},
       //   {id:'003',title:'训练',done:true}
       // ],
-      todos: JSON.parse(localStorage.getItem("todos")) || []
+      todos: JSON.parse(localStorage.getItem("todos")) || [],
+      isShow: true,
     };
   },
   computed:{
@@ -555,5 +575,19 @@ export default {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
+}
+.hello-enter-active{
+  animation: dongHua1 1s linear;
+}
+.hello-leave-active{
+  animation: dongHua1 1s reverse;
+}
+@keyframes dongHua1 {
+  from{
+    transform: translateX(-100%);
+  }
+  to{
+    transform: translateX(0px);
+  }
 }
 </style>
