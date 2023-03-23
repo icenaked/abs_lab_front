@@ -51,9 +51,9 @@
             </el-sub-menu>
             <el-sub-menu index="3">
               <template #title >
-                <el-icon @click="gotoDraft"><editPen /></el-icon>草稿纸
+                <el-icon><editPen /></el-icon>草稿纸
               </template>
-                <el-menu-item index="3-1">Option 1</el-menu-item>
+                <el-menu-item index="3-1" @click="gotoDraft">Option 1</el-menu-item>
                 <el-menu-item index="3-2">Option 2</el-menu-item>
                 <el-menu-item index="3-3">Option 3</el-menu-item>
               <el-sub-menu index="3-4">
@@ -280,6 +280,12 @@
           </transition-group>
         </div>
         <hr/>
+        <!--vuex试验-->
+        <div>
+          <h1>vuex试验</h1>
+          <Count/>
+        </div>
+        <hr/>
         <!--模板-->
         <div>
           <h1>标题</h1>
@@ -302,9 +308,10 @@ import dayjs from "@/utils/dayjs.min"
 import MyFooter from "@/views/component/MyFooter";
 import MyHeader from "@/views/component/MyHeader";
 import MyList from "@/views/component/MyList";
+import Count from "@/views/component/Count";
 export default {
   name: "VueLab",
-  components:{MyList,MyHeader,MyFooter},
+  components:{MyList,MyHeader,MyFooter,Count},
   data() {
     return {
       activeIndex: "1",

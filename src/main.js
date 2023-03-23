@@ -7,13 +7,13 @@ import store from "./store";
 import * as ELIcons from '@element-plus/icons-vue'
 
 
-const app = createApp(App);
+const app = createApp(App).use(store).use(router).use(ElementPlus);
 for (let iconName in ELIcons) {
     app.component(iconName, ELIcons[iconName])
 }
-app.use(router);
-app.use(ElementPlus);
-app.use(store);
+// app.use(router);
+// app.use(ElementPlus);
+// app.use(store);
 
 
 
