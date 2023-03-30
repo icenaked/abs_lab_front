@@ -53,8 +53,8 @@
               <template #title >
                 <el-icon><editPen /></el-icon>草稿纸
               </template>
-                <el-menu-item index="3-1" @click="gotoDraft">Option 1</el-menu-item>
-                <el-menu-item index="3-2">Option 2</el-menu-item>
+                <el-menu-item index="3-1" @click="gotoDraft">嵌套路由</el-menu-item>
+                <el-menu-item index="3-2" @click="gotoExp">Experiment</el-menu-item>
                 <el-menu-item index="3-3">Option 3</el-menu-item>
               <el-sub-menu index="3-4">
                 <template #title>Option 4</template>
@@ -286,6 +286,12 @@
           <Count/>
         </div>
         <hr/>
+        <!--路由试验-->
+        <div>
+          <h1>嵌套路由</h1>
+          <router-view></router-view>
+        </div>
+        <hr/>
         <!--模板-->
         <div>
           <h1>标题</h1>
@@ -431,7 +437,10 @@ export default {
       this.$router.push('/welcome')
     },
     gotoDraft(){
-      this.$router.push('/draft')
+      this.$router.push('/VueLab/luyou?id=666&name=zyq')
+    },
+    gotoExp(){
+      this.$router.push('/exp')
     },
     changeMood(){
       const arr=['happy','sad','normal']

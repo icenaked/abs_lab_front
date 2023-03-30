@@ -1,10 +1,12 @@
 <template>
-<div>66</div>
+<div>
+  草稿纸
+</div>
 </template>
 
 <script>
 export default {
-name: "draft"
+name: "experiment"
 }
 </script>
 

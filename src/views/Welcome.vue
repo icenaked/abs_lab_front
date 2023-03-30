@@ -1,15 +1,17 @@
 <template>
   <div>
-    <div>
+    <div style="margin-top: 10px">
       hello
       <el-button  @click="gotologIn">登录</el-button>
     </div>
-    <div>
+    <div style="margin-top: 10px">
       hello
       <el-button  @click="gotoVueLab">vue实验</el-button>
     </div>
-
-
+    <div style="margin-top: 10px">
+      hello
+      <el-button  @click="gotoVue3Lab">vue3实验</el-button>
+    </div>
   </div>
 
 </template>
@@ -33,7 +35,10 @@ export default {
 
   //指定跳转地址
   this.$router.push('/VueLab')
-}
+},
+    gotoVue3Lab(){
+      this.$router.push('/vue3')
+    }
   }
 }
 
