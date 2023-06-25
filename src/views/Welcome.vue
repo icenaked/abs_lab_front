@@ -12,6 +12,10 @@
       hello
       <el-button  @click="gotoVue3Lab">vue3实验</el-button>
     </div>
+    <div style="margin-top: 10px">
+      hello
+      <el-button  @click="gotoCssLab">css实验</el-button>
+    </div>
   </div>
 
 </template>
@@ -38,6 +42,9 @@ export default {
 },
     gotoVue3Lab(){
       this.$router.push('/vue3')
+    },
+    gotoCssLab(){
+      this.$router.push('/css')
     }
   }
 }

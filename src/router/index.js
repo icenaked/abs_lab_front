@@ -57,6 +57,12 @@ const routes = [
         component: () => import("../views/Vue3.vue"),
         meta: {title: 'Vue3特性'},
     },
+    {
+        path: "/css",
+        name: "css",
+        component: () => import("../views/CssLab.vue"),
+        meta: {title: 'Css布局'},
+    },
 
 ];
 
