@@ -63,6 +63,12 @@ const routes = [
         component: () => import("../views/CssLab.vue"),
         meta: {title: 'Css布局'},
     },
+    {
+        path: "/layout",
+        name: "layout",
+        component: () => import("../views/Layout.vue"),
+        meta: {title: '常见布局'},
+    },
 
 ];
 

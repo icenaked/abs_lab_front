@@ -12,7 +12,7 @@ export default {
 
 <style>
 html, body {
-  width: 100%;
+  /*width: 100%;*/
   background-color: #f6f6f6;
 }
 #app {
