@@ -69,6 +69,12 @@ const routes = [
         component: () => import("../views/Layout.vue"),
         meta: {title: '常见布局'},
     },
+    {
+        path: "/css3",
+        name: "css3",
+        component: () => import("../views/Css3Lab.vue"),
+        meta: {title: 'Css3'},
+    },
 
 ];
 

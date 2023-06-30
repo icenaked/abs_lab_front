@@ -20,6 +20,10 @@
       hello
       <el-button  @click="gotoLayout">常见布局</el-button>
     </div>
+    <div style="margin-top: 10px">
+      hello
+      <el-button  @click="gotoCss3Lab">css3实验</el-button>
+    </div>
   </div>
 
 </template>
@@ -52,7 +56,10 @@ export default {
     },
     gotoLayout(){
       this.$router.push('/layout')
-    }
+    },
+    gotoCss3Lab(){
+      this.$router.push('/css3')
+    },
   }
 }
 
